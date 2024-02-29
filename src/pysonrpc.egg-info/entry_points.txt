@@ -1,0 +1,2 @@
+[console_scripts]
+pysonrpc = pysonrpc.cli:main

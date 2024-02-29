@@ -1,0 +1,13 @@
+setup.cfg
+setup.py
+src/pysonrpc/__init__.py
+src/pysonrpc/cli.py
+src/pysonrpc/jsonrpc.py
+src/pysonrpc/version.py
+src/pysonrpc.egg-info/PKG-INFO
+src/pysonrpc.egg-info/SOURCES.txt
+src/pysonrpc.egg-info/dependency_links.txt
+src/pysonrpc.egg-info/entry_points.txt
+src/pysonrpc.egg-info/not-zip-safe
+src/pysonrpc.egg-info/requires.txt
+src/pysonrpc.egg-info/top_level.txt
