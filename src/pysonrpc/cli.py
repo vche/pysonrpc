@@ -36,6 +36,7 @@ def _parse_args() -> Namespace:
     )
     parser.add_argument(
         "--method-discover-path",
+        "-dp",
         default=None,
         help="Specifies a path after the specified endpoint url to query for methods auto discovery",
     )
@@ -45,8 +46,9 @@ def _parse_args() -> Namespace:
     subparsers = parser.add_subparsers(help="commands", dest="command", required=True)
 
     list_parser = subparsers.add_parser("list", help="List available methods")
-    list_parser.add_argument("--full", "-f", default=False, action="store_true", help="Display full description")
-    list_parser.add_argument("--method", "-m", default=None, help="Print help for this RPC method only")
+    list_parser.add_argument("--raw", "-j", default=False, action="store_true", help="Display full description")
+    list_parser.add_argument("--short", "-s", default=False, action="store_true", help="Only display name and params")
+    list_parser.add_argument("--filter", "-f", default=None, help="Filter RPC methods names to print")
 
     run_parser = subparsers.add_parser("run", help="Execute a method")
     run_parser.add_argument("--method", "-m", default=None, help="RPC method to execute", required=True)
@@ -84,15 +86,22 @@ def main() -> None:
         )
 
         if args.command == "list":
-            if args.full:
-                fullprops = {cli.methods[met].fullname: cli.methods[met].properties for met in cli.methods}
+            if args.filter:
+                met_list = [met for met in cli.methods.values() if args.filter in met.fullname]
+            else:
+                met_list = cli.methods.values()
+            if args.raw:
+                fullprops = {met.fullname: met.properties for met in met_list}
                 print(json.dumps(fullprops, indent=2))
             else:
-                tab = PrettyTable(["Method", "Parameters", "Description"])
+                cols = ["Method", "Parameters"] if args.short else  ["Method", "Parameters", "Description"]
+                tab = PrettyTable(cols)
                 tab.align = "l"
-                met_list = [cli.methods.get(args.method)] if args.method else cli.methods.values()
                 for met in met_list:
-                    tab.add_row([met.fullname, met.param_list(), met.description])
+                    row = [met.fullname, met.param_list()]
+                    if not args.short:
+                        row.append(met.description)
+                    tab.add_row(row)
                 print(tab)
 
         elif args.command == "run":

@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+# #!/usr/bin/env bash
 echo "--> Updating version to $1"
-echo "__version__ = '$1'" > src/kodipyrpc/version.py
+echo "__version__ = '$1'" > src/pysonrpc/version.py
 
 echo "--> Building wheel version $1"
 pixi run release
@@ -25,4 +25,5 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "--> Publish $1 release to pypi"
-python3 -m twine upload --repository kodipyrpc dist/kodipyrpc-$1*
+# python3 -m twine upload --repository pypi dist/pysonrpc-$1*
+python3 -m twine upload dist/pysonrpc-$1*

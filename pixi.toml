@@ -10,7 +10,7 @@ platforms = ["osx-64", 'linux-64']
 build = { cmd = "pip install -e .", cwd = "./" }
 dev = { cmd = ["pysonrpc", "-h", "$KODI_URL", "-a"] }
 test = { cmd = "tox", cwd = "./" }
-release = {cmd = ["setup.py", "sdist", "bdist_wheel"], cwd = "./", depends_on = ["test"]}
+release = {cmd = ["python3", "-m", "build"], cwd = "./", depends_on = ["test"]}
 
 [dependencies]
 python = ">=3.10,<3.13"
@@ -18,3 +18,4 @@ requests = ">=2.31.0,<2.32"
 prettytable = ">=3.10.0,<3.11"
 pip = ">=24.0,<25"
 tox = ">=4.13.0,<4.14"
+build = ">=0.7.0,<0.8"
