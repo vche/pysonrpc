@@ -27,7 +27,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install pytest tox types-requests
+        pip install build pytest tox types-requests
         pip install -e .
 
     - name: Syntax and type checking, tests, coverage
@@ -74,8 +74,7 @@ jobs:
 
   github-release:
     name: >-
-      Sign the Python 🐍 distribution 📦 with Sigstore
-      and upload them to GitHub Release
+      Sign distribution 📦 and create the GitHub Release
     needs:
     - publish
     runs-on: ubuntu-latest
