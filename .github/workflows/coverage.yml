@@ -29,6 +29,7 @@ jobs:
       run: |
         pip install pytest tox types-requests
         pip install -e .
+        .tox/checkers/bin/mypy --install-types
     # - name: Run type and syntax checkers
     #   run: tox -e checkers
     # - name: Test with pytest
