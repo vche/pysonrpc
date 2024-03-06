@@ -11,14 +11,17 @@ Examples with [kodi](https://kodi.tv/) json rpc client:
 ### CLI
 
 ```bash
-# List all methods available, autodetected from the server url
+# List all methods available, autodetected from the server url (for kodi, this is not a complete list)
 pysonrpc -r http://127.0.0.1:8080/jsonrpc -a list
+
+# List all methods available, autodetected from a server rpc method
+pysonrpc -r http://127.0.0.1:8080/jsonrpc -am "JSONRPC.Introspect" list -s -f VideoLibrary.
 
 # List all methods available, autodetected from a schema json file
 pysonrpc -r http://127.0.0.1:8080/jsonrpc -f schema.json list
 
 # List methods filtered with VideoLibrary
-pysonrpc -r http://127.0.0.1:8080/jsonrpc -a list -f VideoLibrary
+pysonrpc -r http://127.0.0.1:8080/jsonrpc -am "JSONRPC.Introspect" list -s -f VideoLibrary
 
 # Get favaourites list
 pysonrpc -r http://127.0.0.1:8080/jsonrpc -a run Favourites.GetFavourites
@@ -118,7 +121,6 @@ sphinx-apidoc -f -o docs/sphinx_conf/source/ src/pycliarr --separate
 ```
 
 ### TODO:
-- method to get json instead of url
 - better way for parameters ? (add a list arg for a method only)
 - tests and coverage
 - github badges

@@ -28,17 +28,23 @@ def _parse_args() -> Namespace:
     parser.add_argument("--password", "-p", help="Password if using basic authentication", default=None)
     parser.add_argument("--debug", "-d", default=False, action="store_true", help="Enable debug logging")
     parser.add_argument(
-        "--method-discover",
+        "--schema-discover",
         "-a",
         default=None,
         action="store_true",
-        help="Auto discover rpc methods at the specified endpoint url",
+        help="Auto discover rpc methods schema at the endpoint url",
     )
     parser.add_argument(
-        "--method-discover-path",
-        "-dp",
+        "--schema-discover-path",
+        "-ap",
         default=None,
-        help="Specifies a path after the specified endpoint url to query for methods auto discovery",
+        help="Auto discover rpc methods schema from this path (relative to the endpoint url)",
+    )
+    parser.add_argument(
+        "--schema-discover-method",
+        "-am",
+        default=None,
+        help="Auto discover rpc methods schema by calling this json rpc method",
     )
     parser.add_argument("--method-file", "-f", help="Discover methods from given json file", default=None)
     # json_file
@@ -73,15 +79,13 @@ def main() -> None:
         print(f"pysonrpc version {pysonrpc.__version__}", file=sys.stderr)
 
     try:
-        args.method_discover
-        args.method_file
-        args.method_discover_path
         cli = pysonrpc.JsonRpcEndpoint(
             args.url,
             user=args.user,
             password=args.password,
-            auto_detect=args.method_discover,
-            schema_path=args.method_discover_path,
+            auto_detect=args.schema_discover,
+            schema_path=args.schema_discover_path,
+            schema_method=args.schema_discover_method,
             json_file=args.method_file,
         )
 

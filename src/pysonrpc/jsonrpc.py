@@ -246,6 +246,7 @@ class JsonRpcEndpoint(MethodContainer):
         methods: Optional[List[Method]] = [],
         json_file: Optional[str] = None,
         schema_path: Optional[str] = None,
+        schema_method: Optional[str] = None,
         schema: Optional[Dict[str, Any]] = None,
         auto_detect: Optional[bool] = False,
     ) -> None:
@@ -257,8 +258,8 @@ class JsonRpcEndpoint(MethodContainer):
         methods_list = methods or []
         if json_file:
             methods_list.extend(self._methods_from_file(json_file))
-        if schema_path or auto_detect:
-            methods_list.extend(self._methods_from_url(schema_path))
+        if schema_method or schema_path or auto_detect:
+            methods_list.extend(self._methods_from_url(path=schema_path, method=schema_method))
         if schema:
             methods_list.extend(self._methods_from_dict(schema))
 
@@ -297,8 +298,11 @@ class JsonRpcEndpoint(MethodContainer):
         with open(json_file, "r") as fp:
             return self._methods_from_dict(json.load(fp))
 
-    def _methods_from_url(self, path: Optional[str]) -> List[Method]:
-        json_schema = self.client.get(path)
+    def _methods_from_url(self, path: Optional[str], method: Optional[str]) -> List[Method]:
+        if method:
+            json_schema =  self.client.request(method=method, raw=False)
+        else:
+            json_schema = self.client.get(path)
         return self._methods_from_dict(json_schema)
 
     def run_method(self, method, *args, raw: bool = True, **kwargs) -> Dict[str, Any]:
