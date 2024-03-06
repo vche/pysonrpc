@@ -2,6 +2,7 @@
 .pixi
 .env
 .coverage
+.tox
 __pycache__
 dist
 *.egg-info
