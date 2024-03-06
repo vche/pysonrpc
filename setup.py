@@ -1,4 +1,4 @@
-#!pyvenv/bin/python
+#!.pixi/envs/default/bin/python
 from setuptools import find_packages, setup
 
 import os

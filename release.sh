@@ -24,5 +24,5 @@ if [ $? -ne 0 ]; then
   exit 1 
 fi
 
-# echo "--> Publish $1 release to pypi"
-# python3 -m twine upload --repository kodipyrpc dist/kodipyrpc-$1*
+echo "--> Publish $1 release to pypi"
+python3 -m twine upload --repository kodipyrpc dist/kodipyrpc-$1*

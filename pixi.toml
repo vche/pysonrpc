@@ -13,6 +13,8 @@ test = { cmd = "tox", cwd = "./" }
 release = {cmd = ["setup.py", "sdist", "bdist_wheel"], cwd = "./", depends_on = ["test"]}
 
 [dependencies]
-python = ">=3.12.2,<3.13"
+python = ">=3.10,<3.13"
 requests = ">=2.31.0,<2.32"
 prettytable = ">=3.10.0,<3.11"
+pip = ">=24.0,<25"
+tox = ">=4.13.0,<4.14"
