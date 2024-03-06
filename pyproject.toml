@@ -43,7 +43,7 @@ dependencies = [
 
 # Deps to install e.g. with   $ pip install sampleproject[dev]
 [project.optional-dependencies]
-dev = ["pip", "tox", "build"]
+dev = ["pip", "tox", "build", "codecov-cli"]
 test = ["tox"]
 
 [project.urls]

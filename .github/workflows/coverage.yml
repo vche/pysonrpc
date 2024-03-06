@@ -4,10 +4,12 @@
 name: Python build
 
 on:
+  workflow_dispatch:
+    branches: [ "main" ]
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
@@ -38,4 +40,5 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         slug: vche/pysonrpc
+        files: docs/coverage/coverage.xml # optional
 
