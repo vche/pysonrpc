@@ -27,7 +27,7 @@ jobs:
         python-version: "3.12"
     - name: Install dependencies
       run: |
-        pip install pytest tox
+        pip install pytest tox types-requests
         pip install -e .
     # - name: Run type and syntax checkers
     #   run: tox -e checkers
