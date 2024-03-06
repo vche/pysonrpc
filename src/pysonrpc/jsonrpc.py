@@ -300,7 +300,7 @@ class JsonRpcEndpoint(MethodContainer):
 
     def _methods_from_url(self, path: Optional[str], method: Optional[str]) -> List[Method]:
         if method:
-            json_schema =  self.client.request(method=method, raw=False)
+            json_schema = self.client.request(method=method, raw=False)
         else:
             json_schema = self.client.get(path)
         return self._methods_from_dict(json_schema)

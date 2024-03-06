@@ -1,4 +1,6 @@
-## Usage
+![GitHub](https://img.shields.io/github/license/vche/pysonrpc) [![Codecov](https://img.shields.io/codecov/c/github/vche/pysonrpc)](https://codecov.io/gh/vche/pysonrpc) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/vche/pysonrpc)](https://github.com/vche/pysonrpc/releases) [![PyPI](https://img.shields.io/pypi/v/pysonrpc)](https://pypi.org/project/pysonrpc/) [![Downloads](https://pepy.tech/badge/pysonrpc)](https://pepy.tech/project/pysonrpc)
+
+## What's pysonrpc
 
 JSON RPC python client module with a CLI and method auto detection.
 
@@ -121,7 +123,8 @@ sphinx-apidoc -f -o docs/sphinx_conf/source/ src/pycliarr --separate
 ```
 
 ### TODO:
+- move setup.cfg to pyproject.toml
 - better way for parameters ? (add a list arg for a method only)
 - tests and coverage
-- github badges
+- workflow to pip publish
 

@@ -98,7 +98,7 @@ def main() -> None:
                 fullprops = {met.fullname: met.properties for met in met_list}
                 print(json.dumps(fullprops, indent=2))
             else:
-                cols = ["Method", "Parameters"] if args.short else  ["Method", "Parameters", "Description"]
+                cols = ["Method", "Parameters"] if args.short else ["Method", "Parameters", "Description"]
                 tab = PrettyTable(cols)
                 tab.align = "l"
                 for met in met_list:

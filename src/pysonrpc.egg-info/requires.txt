@@ -1,2 +1,10 @@
 requests
 prettytable
+
+[dev]
+pip
+tox
+build
+
+[test]
+tox
