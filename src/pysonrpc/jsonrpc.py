@@ -76,6 +76,7 @@ class JsonRpcClient:
             if response.status_code == 200:
                 try:
                     raw_json = response.json()
+                    print(f"decoded result {raw_json}")
                     return raw_json if raw else self.jsonrpc_result(raw_json)
                 except json.JSONDecodeError as e:
                     raise JsonRpcServerError(f"Invalid json response: {response.text}") from e
@@ -161,6 +162,7 @@ class MethodContainer:
 
     def _execute(self) -> Any:
         """Returns the element to assign to the class attribute with named this method."""
+
         return self
 
     def __getattr__(self, name: str) -> Any:
@@ -243,7 +245,6 @@ class JsonRpcEndpoint(MethodContainer):
         url,
         user: Optional[str] = None,
         password: Optional[str] = None,
-        methods: Optional[List[Method]] = [],
         json_file: Optional[str] = None,
         schema_path: Optional[str] = None,
         schema_method: Optional[str] = None,
@@ -255,7 +256,7 @@ class JsonRpcEndpoint(MethodContainer):
         self._methods: Dict[str, Any] = {}
 
         # Load methods definition from all defined source: Manual, dict, file, urlx
-        methods_list = methods or []
+        methods_list = []
         if json_file:
             methods_list.extend(self._methods_from_file(json_file))
         if schema_method or schema_path or auto_detect:

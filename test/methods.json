@@ -1,0 +1,63 @@
+{
+	"description": "JSON-RPC API",
+	"id": "http://test.org/jsonrpc/ServiceDescription.json",
+	"methods": {
+		"Some3.Method1": {
+			"description": "method 3 description",
+			"params": [
+				{
+					"name": "addonid",
+					"required": true,
+					"type": "string"
+				},
+				{
+					"$ref": "Some.Fields",
+					"name": "properties"
+				}
+			],
+			"returns": {
+				"properties": {
+					"addon": {
+						"$ref": "Some.Details",
+						"required": true
+					},
+					"limits": {
+						"$ref": "Some.Limit",
+						"required": true
+					}
+				},
+				"type": "object"
+			},
+			"type": "method"
+		},
+		"Some3.Method2": {
+			"description": "method 3 description",
+			"params": [
+				{
+					"name": "addonid",
+					"required": true,
+					"type": "string"
+				},
+				{
+					"$ref": "Some.Fields",
+					"name": "properties"
+				}
+			],
+			"returns": {
+				"properties": {
+					"addon": {
+						"$ref": "Some.Details",
+						"required": true
+					},
+					"limits": {
+						"$ref": "Some.Limit",
+						"required": true
+					}
+				},
+				"type": "object"
+			},
+			"type": "method"
+		}
+	},
+	"version": "1.0.0"
+}
