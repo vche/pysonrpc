@@ -66,7 +66,7 @@ options:
 ```python
 from pysonrpc import JsonRpcEndpoint
 
-cli = JsonRpcEndpoint("http://127.0.0.1:8080/jsonrpc", user="user", password="password", auto_detect=True)
+cli = JsonRpcEndpoint("http://127.0.0.1:8080/jsonrpc", user="user", password="pwd", schema_method="JSONRPC.Introspect")
 
 #Running a method from name
 result=cli.run_method("Favourites.GetFavourites")
@@ -109,22 +109,7 @@ If mypy fails due to missing import stubs:
 .tox/checkers/bin/mypy --install-types
 ```
 
-### Generate documentation:
-
-```sh
-pip install sphinx sphinx_rtd_theme m2r2
-./setup.py doc
-```
-
-In case new classes/modules are added, update the autodoc list:
-```sh
-rm  docs/sphinx_conf/source/*
-sphinx-apidoc -f -o docs/sphinx_conf/source/ src/pycliarr --separate
-```
-
 ### TODO:
-- move setup.cfg to pyproject.toml
 - better way for parameters ? (add a list arg for a method only)
 - tests and coverage
-- workflow to pip publish
 

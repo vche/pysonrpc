@@ -12,6 +12,32 @@ import pysonrpc
 log = logging.getLogger(__name__)
 
 
+def command_list(cli: pysonrpc.JsonRpcEndpoint, args: Namespace):
+    if args.filter:
+        met_list = [met for met in cli.methods.values() if args.filter in met.fullname]
+    else:
+        met_list = cli.methods.values()
+    if args.raw:
+        fullprops = {met.fullname: met.properties for met in met_list}
+        print(json.dumps(fullprops, indent=2))
+    else:
+        cols = ["Method", "Parameters"] if args.short else ["Method", "Parameters", "Description"]
+        tab = PrettyTable(cols)
+        tab.align = "l"
+        for met in met_list:
+            row = [met.fullname, met.param_list()]
+            if not args.short:
+                row.append(met.description)
+            tab.add_row(row)
+        print(tab)
+
+
+def command_run(cli: pysonrpc.JsonRpcEndpoint, args: Namespace):
+    params = json.loads(args.params)
+    result = cli.run_method(args.method, **params, raw=args.raw)
+    print(json.dumps(result, indent=2))
+
+
 def _setup_logging(level: int = logging.INFO, filename: Optional[str] = None) -> None:
     """Configure standard logging."""
     logging.basicConfig(
@@ -51,17 +77,21 @@ def _parse_args() -> Namespace:
     # auto_discover
     subparsers = parser.add_subparsers(help="commands", dest="command", required=True)
 
+    # List command
     list_parser = subparsers.add_parser("list", help="List available methods")
     list_parser.add_argument("--raw", "-j", default=False, action="store_true", help="Display full description")
     list_parser.add_argument("--short", "-s", default=False, action="store_true", help="Only display name and params")
     list_parser.add_argument("--filter", "-f", default=None, help="Filter RPC methods names to print")
+    list_parser.set_defaults(func=command_list)
 
+    # Run command
     run_parser = subparsers.add_parser("run", help="Execute a method")
     run_parser.add_argument("--method", "-m", default=None, help="RPC method to execute", required=True)
     run_parser.add_argument(
         "--params", "-p", default="{}", help="Optional parameters for the method as json, e.g: '{id:1, name:\"test\"}'"
     )
     run_parser.add_argument("--raw", "-j", default=False, action="store_true", help="Raw json response")
+    run_parser.set_defaults(func=command_run)
 
     args = parser.parse_args()
     args.log_level = logging.DEBUG if args.debug else logging.INFO
@@ -71,6 +101,9 @@ def _parse_args() -> Namespace:
 
 def main() -> None:
     """Main entry point."""
+    commands = {
+        "list"
+    }
 
     args = _parse_args()
     _setup_logging(level=args.log_level)
@@ -89,29 +122,10 @@ def main() -> None:
             json_file=args.method_file,
         )
 
-        if args.command == "list":
-            if args.filter:
-                met_list = [met for met in cli.methods.values() if args.filter in met.fullname]
-            else:
-                met_list = cli.methods.values()
-            if args.raw:
-                fullprops = {met.fullname: met.properties for met in met_list}
-                print(json.dumps(fullprops, indent=2))
-            else:
-                cols = ["Method", "Parameters"] if args.short else ["Method", "Parameters", "Description"]
-                tab = PrettyTable(cols)
-                tab.align = "l"
-                for met in met_list:
-                    row = [met.fullname, met.param_list()]
-                    if not args.short:
-                        row.append(met.description)
-                    tab.add_row(row)
-                print(tab)
-
-        elif args.command == "run":
-            params = json.loads(args.params)
-            result = cli.run_method(args.method, **params, raw=args.raw)
-            print(json.dumps(result, indent=2))
+        if args.func:
+            args.func(cli, args)
+        else:
+            raise pysonrpc.JsonRpcClientError(f"No processing defined for command {args.command}")
 
         sys.exit(0)
     except pysonrpc.JsonRpcClientError as e:

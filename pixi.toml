@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Python json RPC client"
 authors = ["Vivien Chene <viv.chene@gmail.com>"]
 channels = ["conda-forge"]
-platforms = ["osx-64", 'linux-64']
+platforms = ["osx-64", 'linux-64', 'linux-aarch64']
 
 [tasks]
 build = { cmd = "pip install -e .", cwd = "./" }
