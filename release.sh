@@ -24,8 +24,8 @@ echo "__version__ = \"$new_version\"" > $VERSION_FILE
 
 # Commit version change and tag code
 echo "--> Tagging and pushing commit v$new_version"
-git commit -a -m "Update release to $new_version"
-git tag -f -a v$new_version -m "Release v$new_version"
+git commit -a -m "Update release to v$new_version"
+git tag -f -a v$new_version HEAD -m "Release v$new_version"
 git push origin main --follow-tags
 if [ $? -ne 0 ]; then 
   echo "The command failed with exit status $?" 

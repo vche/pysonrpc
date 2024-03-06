@@ -14,14 +14,14 @@ on:
 jobs:
   # Build job: install, check, test, and build packages
   build:
-    name: Build distribution 📦
+    name: Build and validate 🐍📦
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: "3.x"
 
@@ -44,14 +44,14 @@ jobs:
       run: python3 -m build
 
     - name: Store the distribution packages
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: python-package-distributions
         path: dist/
 
   publish:
     name: >-
-      Publish Python 🐍 distribution 📦 to PyPI
+      Publish 🐍📦 to PyPI
     if: startsWith(github.ref, 'refs/tags/')  # only publish to PyPI on tag pushes
     needs:
     - build
@@ -74,7 +74,7 @@ jobs:
 
   github-release:
     name: >-
-      Sign distribution 📦 and create the GitHub Release
+      Sign 📦 and create GitHub release
     needs:
     - publish
     runs-on: ubuntu-latest
