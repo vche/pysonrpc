@@ -7,7 +7,7 @@ fi
 
 # Compute new version number
 VERSION_FILE=src/pysonrpc/version.py
-version=$(cut -d "'" -f 2 $VERSION_FILE)
+version=$(cut -d '"' -f 2 $VERSION_FILE)
 if [[ "$1" == "" ]]; then
   major=$(echo $version | cut -d "." -f 1)
   minor=$(echo $version | cut -d "." -f 2)
@@ -19,13 +19,13 @@ fi
 
 # Update version number and rebuild
 echo "--> Updating from version $version to $new_version"
-echo "__version__ = '$new_version'" > $VERSION_FILE
+echo "__version__ = \"$new_version\"" > $VERSION_FILE
 # pixi run build
 
 # Commit version change and tag code
 echo "--> Tagging and pushing commit v$new_version"
 git commit -a -m "Update release to $new_version"
-git tag -a v$new_version
+git tag -a v$new_version -m "Release v$new_version"
 git push origin main
 if [ $? -ne 0 ]; then 
   echo "The command failed with exit status $?" 
