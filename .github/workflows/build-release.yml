@@ -3,13 +3,13 @@
 
 name: Build 🐍 and publish 📦
 
-on:
-  workflow_dispatch:
-    branches: [ "main" ]
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [workflow_dispatch, push, pull_request]
+  # workflow_dispatch:
+  #   branches: [ "main" ]
+  # push:
+  #   branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
 
 jobs:
   # Build job: install, check, test, and build packages
