@@ -26,8 +26,8 @@ echo "__version__ = \"$new_version\"" > $VERSION_FILE
 echo "--> Tagging and pushing commit v$new_version"
 git commit -a -m "Update release to v$new_version"
 git tag -f -a "v$new_version" HEAD -m "Release v$new_version"
-git push origin v$new_version main
-git push origin v$new_version v$new_version
+git push origin v$new_version main --follow-tags
+# git push origin v$new_version v$new_version
 if [ $? -ne 0 ]; then 
   echo "The command failed with exit status $?" 
   exit 1 
