@@ -11,7 +11,7 @@ build = { cmd = "pip install -e .", cwd = "./" }
 dev = { cmd = ["pysonrpc", "-h", "$KODI_URL", "-a"] }
 test = { cmd = "tox", cwd = "./" }
 release = {cmd = ["python3", "-m", "build"], cwd = "./", depends_on = ["test"]}
-coverage =  {cmd = ["codecovcli" "--verbose" "upload-process" "--fail-on-error" "-t" "$CODECOV_TOKEN" "-f" "docs/coverage/coverage.xml"], cwd = "./"}
+coverage =  {cmd = ["codecovcli", "--verbose", "upload-process", "--fail-on-error", "-t", "$CODECOV_TOKEN", "-f", "docs/coverage/coverage.xml"], cwd = "./"}
 
 [dependencies]
 python = ">=3.10,<3.13"
