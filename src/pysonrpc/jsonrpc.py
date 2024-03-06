@@ -76,7 +76,6 @@ class JsonRpcClient:
             if response.status_code == 200:
                 try:
                     raw_json = response.json()
-                    print(f"decoded result {raw_json}")
                     return raw_json if raw else self.jsonrpc_result(raw_json)
                 except json.JSONDecodeError as e:
                     raise JsonRpcServerError(f"Invalid json response: {response.text}") from e
@@ -122,6 +121,7 @@ class JsonRpcClient:
         log.debug(f"JSON RPC request to {self._url}: {payload}")
         try:
             response = requests.post(self._url, json=payload, headers=headers, auth=self._auth)
+
         except Exception as e:
             raise JsonRpcClientError(f"Request error: {e}") from e
 
@@ -145,7 +145,7 @@ class JsonRpcClient:
     def jsonrpc_result(self, response: Dict[str, Any]) -> Dict[str, Any]:
         if self.JSONRPC_KEY_RESP_RESULT in response:
             return response[self.JSONRPC_KEY_RESP_RESULT]
-        elif self.JSONRPC_KEY_RESP_ERROR in response:
+        elif self.JSONRPC_KEY_RESP_ERROR in response and isinstance(response[self.JSONRPC_KEY_RESP_ERROR], dict):
             raise JsonRpcServerError(response[self.JSONRPC_KEY_RESP_ERROR].get(self.JSONRPC_KEY_RESP_ERROR_MSG))
         else:
             raise JsonRpcServerError(f"Invalid json rpc response: {response}")
@@ -162,7 +162,6 @@ class MethodContainer:
 
     def _execute(self) -> Any:
         """Returns the element to assign to the class attribute with named this method."""
-
         return self
 
     def __getattr__(self, name: str) -> Any:
