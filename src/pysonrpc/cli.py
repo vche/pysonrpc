@@ -101,7 +101,6 @@ def _parse_args() -> Namespace:
 
 def main() -> None:
     """Main entry point."""
-    commands = {"list"}
 
     args = _parse_args()
     _setup_logging(level=args.log_level)
