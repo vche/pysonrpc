@@ -56,7 +56,7 @@ def _parse_args() -> Namespace:
     parser.add_argument(
         "--schema-discover",
         "-a",
-        default=None,
+        default=False,
         action="store_true",
         help="Auto discover rpc methods schema at the endpoint url",
     )
@@ -119,7 +119,8 @@ def main() -> None:
             json_file=args.method_file,
         )
 
-        if args.func:
+        print(args)
+        if hasattr(args, "func") and args.func:
             args.func(cli, args)
         else:
             raise pysonrpc.JsonRpcClientError(f"No processing defined for command {args.command}")

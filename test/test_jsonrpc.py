@@ -1,6 +1,5 @@
 import pytest
 import json
-# from copy import deepcopy
 from unittest.mock import ANY, call, patch, Mock
 from pysonrpc.jsonrpc import JsonRpcClient, JsonRpcEndpoint, JsonRpcClientError, JsonRpcServerError, Method
 

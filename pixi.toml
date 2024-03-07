@@ -8,7 +8,7 @@ platforms = ["osx-64", 'linux-64', 'linux-aarch64']
 
 [tasks]
 build = { cmd = "pip install -e .", cwd = "./" }
-dev = { cmd = ["pysonrpc", "-h", "$KODI_URL", "-a"] }
+dev = { cmd = ["pysonrpc", "-r", "$KODI_URL", "-a"] }
 test = { cmd = "tox", cwd = "./" }
 build-release = {cmd = ["python3", "-m", "build"], cwd = "./", depends_on = ["test"]}
 release = {cmd = ["release.sh"], cwd = "./", depends_on = ["test"]}
