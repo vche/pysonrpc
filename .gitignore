@@ -1,6 +1,6 @@
 # pixi environments
 .pixi
-.env
+.env*
 .coverage
 .tox
 __pycache__

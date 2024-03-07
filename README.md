@@ -109,7 +109,20 @@ If mypy fails due to missing import stubs:
 .tox/checkers/bin/mypy --install-types
 ```
 
+### Release
+
+To push to main and increment the current version:
+```sh
+pixi run release
+```
+
+To push to main and specify the new version current version:
+```sh
+pixi run release 1.2.3
+```
+
+_Note: A workflow is validating, building, releasing and publishing push requests and tagged commits_
+
 ### TODO:
 - better way for parameters ? (add a list arg for a method only)
-- tests and coverage
 

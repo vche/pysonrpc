@@ -8,11 +8,15 @@ platforms = ["osx-64", 'linux-64', 'linux-aarch64']
 
 [tasks]
 build = { cmd = "pip install -e .", cwd = "./" }
-dev = { cmd = ["pysonrpc", "-r", "$KODI_URL", "-a"] }
+rpc = { cmd = ["pysonrpc", "-r", "$RPC_URL", "-am", "JSONRPC.Introspect"] }
+local = { cmd = ["pysonrpc", "-r", "$RPC_LOCAL_URL", "-am", "JSONRPC.Introspect"] }
 test = { cmd = "tox", cwd = "./" }
 build-release = {cmd = ["python3", "-m", "build"], cwd = "./", depends_on = ["test"]}
 release = {cmd = ["release.sh"], cwd = "./", depends_on = ["test"]}
 coverage =  {cmd = ["codecovcli", "--verbose", "upload-process", "--fail-on-error", "-t", "$CODECOV_TOKEN", "-f", "docs/coverage/coverage.xml"], cwd = "./"}
+
+[activation]
+scripts = ["env.sh"]
 
 [dependencies]
 python = ">=3.10,<3.13"

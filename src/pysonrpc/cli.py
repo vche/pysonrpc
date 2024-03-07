@@ -119,7 +119,6 @@ def main() -> None:
             json_file=args.method_file,
         )
 
-        print(args)
         if hasattr(args, "func") and args.func:
             args.func(cli, args)
         else:
